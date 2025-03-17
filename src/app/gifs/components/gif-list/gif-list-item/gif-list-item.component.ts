@@ -7,4 +7,5 @@ import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 })
 export class GifListItemComponent {
   imageUrl = input.required<string>();
+  title = input.required<string>();
 }

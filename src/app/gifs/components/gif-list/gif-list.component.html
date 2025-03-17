@@ -1,5 +1,9 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-  @for (gif of gifs(); track gif.id) {
-    <gif-list-item [imageUrl]="gif.url"></gif-list-item>
+<div class="h-screen overflow-y-scroll grid grid-cols-2 md:grid-cols-4 gap-4" (scroll)="onScroll()" #groupDiv>
+  @for (group of groupOfGifs(); track $index){
+    <div class="grid gap-4">
+      @for (gif of group; track gif.id){
+        <gif-list-item [imageUrl]="gif.url" [title]="gif.title"></gif-list-item>
+      }
+    </div>
   }
 </div>

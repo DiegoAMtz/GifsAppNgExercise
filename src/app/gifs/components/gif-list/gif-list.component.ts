@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, input, output, viewChild} from '@angular/core';
 import {GifListItemComponent} from './gif-list-item/gif-list-item.component';
 import {Gif} from '../../interfaces/gif.interface';
 
@@ -11,5 +11,19 @@ import {Gif} from '../../interfaces/gif.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GifListComponent {
-  gifs = input.required<Array<Gif>>();
+  groupOfGifs = input.required<Array<Array<Gif>>>();
+  currentScroll = input<number>(0);
+  scrollDivRef = viewChild<ElementRef>('groupDiv');
+  finalScroll = output<any>();
+
+  onScroll() {
+    const scrollDiv = this.scrollDivRef()?.nativeElement;
+    if (!scrollDiv) {return}
+    const {scrollTop, clientHeight, scrollHeight} = scrollDiv;
+    const actualScrollHeight = scrollTop + clientHeight;
+    const isAtBottom = (actualScrollHeight + (scrollHeight * 0.05)) >= scrollHeight;
+    if (isAtBottom) {
+      this.finalScroll.emit({scrollTop});
+    }
+  }
 }

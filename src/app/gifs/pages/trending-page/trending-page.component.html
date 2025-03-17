@@ -1,3 +1,4 @@
 <div class="py-5">
-  <gif-list [gifs]="imageUrls()"></gif-list>
+  <gif-list (finalScroll)="getNewGifs($event)" [currentScroll]="scrollStateService.trendingScrollState()"
+            [groupOfGifs]="gifsService.trendingGifGroup()"></gif-list>
 </div>
